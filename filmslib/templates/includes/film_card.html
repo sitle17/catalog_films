@@ -1,0 +1,19 @@
+{% load thumbnail %}
+<div class="container">
+  <div class='row row-cols-1 row-cols-md-3 g-4'>
+    {% for film in films %}
+        <div class="col">
+        <a href="{% url 'films:film_detail' pk=film.pk %}" class="text-decoration-none text-dark">
+
+            <div class="card h-100">
+            {% thumbnail film.image "900x900" as im %}
+            <img src="{{ im.url }}" class="card-img-top">
+            {% endthumbnail %}
+            <h5 class="card-title">{{ film.title }}</h5>
+            <p class="card-text">{{ film.rating }}</p>
+        </div>
+            </a>
+        </div>
+    {% endfor %}
+ </div>
+</div>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %} {{ film.title }} {% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-5 mb-4">
+            <div class="card shadow rounded-4 overflow-hidden">
+            {% thumbnail film.image "700x700" as im %}
+                <img src="{{im.url}}">
+            {% endthumbnail %}
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h1 class="fw-bold mb-4">{{film.title}}</h1>
+            <ul class="list-unstyled fs-5">
+                <li class="mb-2">
+                <strong>Год выпуска:</strong> {{ film.year}}</li>
+                <li class="mb-2"><strong>Рейтинг:</strong>{{ film.rating }}</li>
+                <li class="mb-2"><strong>Рейтинг на нашем сайте:</strong>{{ avg_rating.star__avg }}</li>
+                <li class="mb-3">
+                    <strong>Жанр:</strong>
+                    {% for g in film.genre.all %}
+                    <a href="{% url 'films:genre_films' slug=g.slug %}">
+                        <span class="badge bg-warning text-dark me-1"> {{g}}</span>
+                        </a>
+                    {% endfor %}
+                </li>
+            </ul>
+            <p class="lead text-muted"  >{{ film.description }}</p>
+        </div>
+        <div class="py-5">
+            <h3>отзывы и рецензии</h3>
+            <span style="text_muted">
+                всего отзывов: {{ reviews_count }}
+            </span>
+            <div style="border: solid black 1px; border-radius: 15px; padding: 10px;">
+                <form method="post" action="{% url 'films:add_review' pk=film.id %}">
+                    {% csrf_token %}
+                    <div class="form-group row my-3 p-3">
+                        <h5>оставьте своё мнение:</h5>
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn" style="background-color:#8A5E20; color: white">отправить</button>
+                </form>
+            </div>
+            <div class="py-3">
+                {% for review in reviews.all %}
+                <div class="contanier" style="border: solid black 1px; border-radius:10px; padding: 15px">
+                    <h6> {{ review.username }}</h6>
+                    <span><b> рейтинг {{  review.star }}</b></span>
+
+                    <p>{{review.text}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+{% endblock %}

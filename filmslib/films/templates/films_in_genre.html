@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}{{genre.name}} {% endblock %}
+{% block content %}
+<div class="container py-5">
+
+     <div class="container">
+         <div class="row">
+             <div class="col">
+                 {% thumbnail genre.image "700x700" as im %}
+                 <img src="{{im.url}}">
+                 {% endthumbnail %}
+             </div>
+             <div class="col">
+                 <h1>{{ genre.name }}</h1>
+                 <div style="border: 1px solid black; border-radius:10px; text=aling: justify|">
+                     <p>{{genre.description}}</p>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+    {% include 'includes/film_card.html' %}
+
+</div>
+{% endblock %}
