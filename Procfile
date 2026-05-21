@@ -1,1 +1,2 @@
-web: gunicorn filmslib.wsgi --log-file -
+web: gunicorn filmslib.wsgi:application --bind 0.0.0.0:$PORT
+
