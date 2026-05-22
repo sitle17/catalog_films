@@ -1,4 +1,5 @@
-web: gunicorn filmsdb.wsgi --bind 0.0.0.0:$PORT
+web: gunicorn --env PYTHONPATH=. filmsdb.wsgi --bind 0.0.0.0:$PORT
+
 
 
 
